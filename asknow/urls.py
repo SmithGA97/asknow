@@ -21,7 +21,8 @@ from apps.posts import views as posts_views
 
 router = routers.DefaultRouter()
 #router.register(r'users', users_views)
-router.register(r'posts', posts_views.QuestionViewSet)
+router.register(r'question', posts_views.QuestionViewSet)
+router.register(r'answer', posts_views.AnswerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
