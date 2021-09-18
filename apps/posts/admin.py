@@ -8,8 +8,7 @@ from .models import Question, Answer
 class QuestionAdmin(admin.ModelAdmin):
     """Question admin"""
     list_display = (
-        'pk', 
-        'user', 
+        'pk',
         'profile',
         'title', 
         'detail_question',
@@ -20,7 +19,7 @@ class QuestionAdmin(admin.ModelAdmin):
     
     list_display_links = (
         'pk',
-        'user'
+        'profile'
     )
     
     list_editable = (
@@ -31,14 +30,14 @@ class QuestionAdmin(admin.ModelAdmin):
     list_filter = (
         'created', 
         'modified',
-        'user__is_active',
-        'user__is_staff',
+        'profile__user__is_active',
+        'profile__user__is_staff',
     )
 
     fieldsets = (
         ('Profile', {
             'fields':(
-                ('user'),
+                ('profile'),
                 ('title', 'detail_question'),
                 ('photo',)
             )
@@ -49,7 +48,7 @@ class QuestionAdmin(admin.ModelAdmin):
             )
         })
     )
-    readonly_fields= ('user','created', 'modified')
+    readonly_fields= ('profile','created', 'modified')
 
 
 @admin.register(Answer)
@@ -58,19 +57,18 @@ class AnswerAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
         'question_id', 
-        'user', 
         'profile',
         'detail_answer',
         'likes',
         'dislikes',
-        'correct',
+        'is_correct',
         'created', 
         'modified',
     ) 
     
     list_display_links = (
         'pk',
-        'user'
+        'profile'
     )
     
     list_editable = (
@@ -80,14 +78,14 @@ class AnswerAdmin(admin.ModelAdmin):
     list_filter = (
         'created', 
         'modified',
-        'user__is_active',
-        'user__is_staff',
+        'profile__user__is_active',
+        'profile__user__is_staff',
     )
 
     fieldsets = (
         ('Profile', {
             'fields':(
-                ('user', 'detail_answer'),
+                ('profile', 'detail_answer'),
             )
         }),
         ('Metadata', {
@@ -96,4 +94,4 @@ class AnswerAdmin(admin.ModelAdmin):
             )
         })
     )
-    readonly_fields= ('user','created', 'modified')
+    readonly_fields= ('profile','created', 'modified')

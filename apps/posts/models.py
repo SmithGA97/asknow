@@ -5,14 +5,10 @@ from django.contrib.auth.models import User
 
 class Question(models.Model):
     """Ask model"""
-
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE
-    )
     profile = models.ForeignKey(
         Profile,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="questions"
     )
     title = models.CharField(
         max_length=255
@@ -31,26 +27,24 @@ class Question(models.Model):
     )
 
     def __str__(self):
-        return '{} by @{}'.format(self.title, self.user.username)
+        return f'{self.title} by {self.profile}'
+
 
 class Answer(models.Model):
     """Answer Model"""
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE
-    )
     profile = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE
     )
-    question_id = models.ForeignKey(
+    question = models.ForeignKey(
         Question,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="answers"
     )
     detail_answer = models.TextField(
         blank=False
     )
-    correct = models.BooleanField(
+    is_correct = models.BooleanField(
         blank=True,
         null=True
     )
@@ -65,4 +59,4 @@ class Answer(models.Model):
 
 
     def __str__(self):
-        return '{} by @{}'.format(self.title, self.user.username)
+        return f'{self.title} by @{ self.profile}'
